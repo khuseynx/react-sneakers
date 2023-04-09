@@ -10,11 +10,11 @@ function Header () {
   
     <ul className="d-flex">
       <li className="mr-30">
-        <img width={40} height={40} src="/img/cart.svg" alt="" />
+        <img width={25} height={25} src="/img/cart.svg" alt="" />
         <span>1205 руб.</span>
       </li>
       <li>
-        <img width={40} height={40} src="/img/user.svg" alt="" />
+        <img width={25} height={25} src="/img/user.svg" alt="" />
       </li>
     </ul>
   </header>
