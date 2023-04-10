@@ -7,7 +7,7 @@ function Drawer() {
           <img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
         </h2>
 
-        <div className='items'>
+        <div className="items">
           <div className="cartItem d-flex align-center mb-20">
             <div
               style={{ backgroundImage: "url(/img/sneakers/1.jpg)" }}
