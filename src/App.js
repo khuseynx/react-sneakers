@@ -1,5 +1,6 @@
 //app.js
 
+import React from 'react';
 import Card from "./components/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
@@ -40,6 +41,7 @@ function App() {
             <input placeholder="Поиск..." />
           </div>
         </div>
+
         <div className="d-flex">
           <div className="d-flex">
             {arr.map((obj) => (
@@ -47,6 +49,8 @@ function App() {
                 title={obj.title}
                 price={obj.price}
                 imageUrl={obj.imageUrl}
+                onFavorite={() => console.log('Добавили в закладки')}
+                onPlus={() => console.log('Нажали плюс')}
               />
             ))}
           </div>
