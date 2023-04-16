@@ -8,45 +8,71 @@ import Drawer from "./components/Drawer";
 function App() {
   const [items, setItems] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
+  const [searchValue, setSearchValue] = React.useState("");
   const [cartOpened, setCartOpened] = React.useState(false);
 
   React.useEffect(() => {
     fetch("https://643859354660f26eb19adfe5.mockapi.io/items")
-    .then((res) => {
-      return res.json();
-    })
-    .then((json) => {
-      setItems(json);
-    });
-  }, []); 
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        setItems(json);
+      });
+  }, []);
 
   const onAddtoCart = (obj) => {
-    setCartItems(prev => [...prev, obj]);
-  }
+    setCartItems((prev) => [...prev, obj]);
+  };
+
+  const onChangeSearchValue = (event) => {
+    setSearchValue(event.target.value);
+  };
 
   return (
     <div className="wrapper clear">
-      {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} />}
+      {cartOpened && (
+        <Drawer items={cartItems} onClose={() => setCartOpened(false)} />
+      )}
       <Header onClickCart={() => setCartOpened(true)} />
       <div className="content p-40">
         <div className="d-flex align-center justify-between md-40">
-          <h1>Все кроссовки</h1>
+          <h1>
+            {searchValue
+              ? `Поиск по запросу: "${searchValue}"`
+              : "Все кроссовки"}
+          </h1>
           <div className="search-block d-flex">
+            {searchValue && (
+              <img
+                onClick={() => setSearchValue("")}
+                className="clear cu-p"
+                src="/img/btn-remove.svg"
+                alt="Clear"
+              />
+            )}
             <img src="/img/search.svg" alt="Search" />
-            <input placeholder="Поиск..." />
+            <input
+              onChange={onChangeSearchValue}
+              value={searchValue}
+              placeholder="Поиск..."
+            />
           </div>
         </div>
 
         <div className="d-flex flex-wrap">
-          {items.map((item) => (
-            <Card
-              title={item.title}
-              price={item.price}
-              imageUrl={item.imageUrl}
-              onFavorite={() => console.log("Добавили в закладки")}
-              onPlus={(obj) => onAddtoCart(obj)}
-            />
-          ))}
+          {items
+            .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
+            .map((item, index) => (
+              <Card
+                key={index}
+                title={item.title}
+                price={item.price}
+                imageUrl={item.imageUrl}
+                onFavorite={() => console.log("Добавили в закладки")}
+                onPlus={(obj) => onAddtoCart(obj)}
+              />
+            ))}
         </div>
       </div>
     </div>

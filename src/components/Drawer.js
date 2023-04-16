@@ -25,6 +25,7 @@ function Drawer({ onClose, items = [] }) {
                 <b>{obj.price} руб.</b>
               </div>
               <img
+                onClick={onClose}
                 className="removeBtn"
                 src="/img/btn-remove.svg"
                 alt="Remove"
