@@ -1,6 +1,7 @@
 //app.js
 
 import React from "react";
+import axios from "axios";
 import Card from "./components/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
@@ -12,17 +13,26 @@ function App() {
   const [cartOpened, setCartOpened] = React.useState(false);
 
   React.useEffect(() => {
-    fetch("https://643859354660f26eb19adfe5.mockapi.io/items")
+    axios
+      .get("https://643859354660f26eb19adfe5.mockapi.io/items")
       .then((res) => {
-        return res.json();
-      })
-      .then((json) => {
-        setItems(json);
+        setItems(res.data);
+      });
+    axios
+    .get("https://643859354660f26eb19adfe5.mockapi.io/cart")
+    .then((res) => {
+        setCartItems(res.data);
       });
   }, []);
 
   const onAddtoCart = (obj) => {
+    axios.post("https://643859354660f26eb19adfe5.mockapi.io/cart", obj);
     setCartItems((prev) => [...prev, obj]);
+  };
+
+  const onRemoveItem = (id) => {
+    axios.delete(`https://643859354660f26eb19adfe5.mockapi.io/cart/${id}`);
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
   const onChangeSearchValue = (event) => {
@@ -32,7 +42,11 @@ function App() {
   return (
     <div className="wrapper clear">
       {cartOpened && (
-        <Drawer items={cartItems} onClose={() => setCartOpened(false)} />
+        <Drawer
+          items={cartItems}
+          onClose={() => setCartOpened(false)}
+          onRemove={onRemoveItem}
+        />
       )}
       <Header onClickCart={() => setCartOpened(true)} />
       <div className="content p-40">
@@ -62,10 +76,13 @@ function App() {
 
         <div className="d-flex flex-wrap">
           {items
-            .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
+            .filter((item) =>
+              item.title.toLowerCase().includes(searchValue.toLowerCase())
+            )
             .map((item, index) => (
               <Card
-                key={index}
+                key={item.id}
+                id={item.id}
                 title={item.title}
                 price={item.price}
                 imageUrl={item.imageUrl}
