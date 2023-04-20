@@ -1,7 +1,7 @@
 //app.js
 
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
@@ -12,7 +12,7 @@ function App() {
   const [items, setItems] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
   const [favorites, setFavorites] = React.useState([]);
-  const [searchValue, setSearchValue] = React.useState('');
+  const [searchValue, setSearchValue] = React.useState("");
   const [cartOpened, setCartOpened] = React.useState(false);
 
   React.useEffect(() => {
@@ -57,8 +57,9 @@ function App() {
         setFavorites((prev) => [...prev, data]);
       }
     } catch (error) {
-      alert('Не удалось добавить в избранное');
+      alert("Не удалось добавить в избранное");
     }
+  }
 
     const onChangeSearchValue = (event) => {
       setSearchValue(event.target.value);
@@ -75,23 +76,31 @@ function App() {
         )}
         <Header onClickCart={() => setCartOpened(true)} />
 
-        <Route path="/" exact>
-          <Home
-            items={items}
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-            onChangeSearchValue={onChangeSearchValue}
-            onAddtoFavorite={onAddtoFavorite}
-            onAddtoCart={onAddtoCart}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                items={items}
+                searchValue={searchValue}
+                setSearchValue={setSearchValue}
+                onChangeSearchValue={onChangeSearchValue}
+                onAddtoFavorite={onAddtoFavorite}
+                onAddtoCart={onAddtoCart}
+              />
+            }
           />
-        </Route>
 
-        <Route path="/favorites" exact>
-          <Favorites items={favorites} onAddtoFavorite={onAddtoFavorite} />
-        </Route>
+          <Route
+            path="/favorites"
+            element={
+              <Favorites items={favorites} onAddtoFavorite={onAddtoFavorite} />
+            }
+          />
+        </Routes>
       </div>
     );
   };
-}
+
 
 export default App;
