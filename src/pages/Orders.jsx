@@ -30,7 +30,7 @@ function Orders() {
       </div>
 
       <div className="d-flex flex-wrap">
-        {(isLoading ? [...Array()] : orders).map((item, index) => (
+        {(isLoading ? [...Array(8)] : orders).map((item, index) => (
           <Card
             key={index}
             imageUrl={item?.imageUrl}

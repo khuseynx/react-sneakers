@@ -3,8 +3,6 @@ import ContentLoader from "react-content-loader";
 import AppContext from "../..//context";
 import styles from "./Card.module.scss";
 
-// import ImageChecked from '../../../public/img/btn-checked.svg'
-
 function Card({
   id,
   title,
@@ -17,13 +15,14 @@ function Card({
 }) {
   const { isItemAdded } = React.useContext(AppContext);
   const [isFavorite, setIsIsFavorite] = React.useState(favorited);
+  const obj = { id, parentId: id, title, imageUrl, price};
 
   const onClickPlus = () => {
-    onPlus({ id, title, imageUrl, price });
+    onPlus(obj);
   };
 
   const onClickFavorite = () => {
-    onFavorite({ id, title, imageUrl, price });
+    onFavorite(obj);
     setIsIsFavorite(!isFavorite);
   };
 

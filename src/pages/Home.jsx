@@ -43,11 +43,11 @@ const renderItems = () => {
             <img
               onClick={() => setSearchValue("")}
               className="clear cu-p"
-              src="/img/btn-remove.svg"
+              src="img/btn-remove.svg"
               alt="Clear"
             />
           )}
-          <img src="/img/search.svg" alt="Search" />
+          <img src="img/search.svg" alt="Search" />
           <input
             onChange={onChangeSearchValue}
             value={searchValue}
