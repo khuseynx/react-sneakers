@@ -61,6 +61,7 @@ function Card({
               <span>Цена:</span>
               <b>{price} руб.</b>
             </div>
+            
             {onPlus && (
               <img
                 className={styles.plus}

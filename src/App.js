@@ -6,6 +6,7 @@ import Drawer from "./components/Drawer";
 import AppContext from "./context";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
+import Orders from "./pages/Orders";
 
 function App() {
   const [items, setItems] = React.useState([]);
@@ -14,6 +15,8 @@ function App() {
   const [searchValue, setSearchValue] = React.useState("");
   const [cartOpened, setCartOpened] = React.useState(false);
   const [isLoading, setisLoading] = React.useState(true);
+
+
 
   React.useEffect(() => {
     async function fetchData() {
@@ -93,6 +96,7 @@ function App() {
         favorites,
         isItemAdded,
         onAddtoFavorite,
+        onAddtoCart,
         setCartOpened,
         setCartOpened
       }}
@@ -126,6 +130,7 @@ function App() {
           />
 
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/orders" element={<Orders />} />
         </Routes>
       </div>
     </AppContext.Provider>
